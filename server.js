@@ -11,11 +11,6 @@ app.use(express.json()); // parses incoming requests with JSON payloads
 // declare react files in build as static
 app.use(express.static(path.join(__dirname, "build")));
 
-// serve index.html from the build folder
-app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
-});
-
 //create connection to database
 const db = mysql.createPool({
     host: process.env.DB_HOST, //localhost
@@ -28,7 +23,7 @@ const listener = app.listen(process.env.PORT || 3000, () => {
     console.log("App is listening on port " + listener.address().port);
 });
 
-app.get("/weight", (req, res) => {
+app.get("/weights", (req, res) => {
     db.query("SELECT * FROM weights", (err, result) => {
         if (err) {
             console.log(err);
@@ -38,7 +33,7 @@ app.get("/weight", (req, res) => {
     });
 });
 
-app.post("/weight", (req, res) => {
+app.post("/weights", (req, res) => {
     const insertQuery = "INSERT INTO weights SET ?";
     db.query(insertQuery, req.body, (err, result) => {
         if (err) {
@@ -49,7 +44,7 @@ app.post("/weight", (req, res) => {
     });
 });
 
-app.put("/weight", (req, res) => {
+app.put("/weights", (req, res) => {
     const updateQuery =
         "UPDATE weights SET time = ?, food_weight = ? WHERE id = ?";
     db.query(
@@ -65,7 +60,7 @@ app.put("/weight", (req, res) => {
     );
 });
 
-app.delete("/weight/:id", (req, res) => {
+app.delete("/weights/:id", (req, res) => {
     db.query(
         "DELETE FROM weights WHERE id = ?",
         req.params.id,
@@ -77,4 +72,9 @@ app.delete("/weight/:id", (req, res) => {
             }
         }
     );
+});
+
+// serve index.html from the build folder
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
 });

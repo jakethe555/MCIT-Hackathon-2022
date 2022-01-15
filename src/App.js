@@ -10,7 +10,7 @@ function App() {
     // 2.
     const getWeights = () => {
         axios
-            .get("https://cool-pet-food-tracker.herokuapp.com/weight")
+            .get("https://cool-pet-food-tracker.herokuapp.com/weights")
             .then((res) => {
                 setWeights(res.data);
             });
