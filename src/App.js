@@ -10,7 +10,7 @@ function App() {
     // 2.
     const getWeights = () => {
         axios
-            .get("https://cool-pet-food-tracker.herokuapp.com//weight")
+            .get("https://cool-pet-food-tracker.herokuapp.com/weight")
             .then((res) => {
                 setWeights(res.data);
             });
@@ -23,29 +23,17 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
+                <div className="weights">
+                    {weights.map((item) => {
+                        return (
+                            <div className="weight">
+                                <h3>Date Time: {item.time}</h3>
+                                <h3>Weight: {item.food_weight}</h3>
+                            </div>
+                        );
+                    })}
+                </div>
             </header>
-            {/* <div className="weights">
-                {weights.map((item) => {
-                    return (
-                        <div className="weight">
-                            <h3>Date Time: {item.time}</h3>
-                            <h3>Weight: {item.food_weight}</h3>
-                        </div>
-                    );
-                })}
-            </div> */}
         </div>
     );
 }
