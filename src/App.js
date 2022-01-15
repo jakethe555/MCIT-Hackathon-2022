@@ -15,7 +15,7 @@ function App() {
                 .then((res) => {
                     setWeights(res.data);
                 });
-        }, 60000);
+        }, 5000);
     };
     // 3.
     useEffect(() => {
