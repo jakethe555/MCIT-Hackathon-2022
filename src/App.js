@@ -10,11 +10,9 @@ function App() {
     // 2. Create function to GET all the weights from server store to weights array.
     const getWeights = () => {
         setInterval(() => {
-            axios
-                .get("https://cool-pet-food-tracker.herokuapp.com/weights")
-                .then((res) => {
-                    setWeights(res.data);
-                });
+            axios.get("http://localhost:3000/weights").then((res) => {
+                setWeights(res.data);
+            });
         }, 5000); // query every 5 sec
     };
     // 3. Create a useEffect hook to update weights

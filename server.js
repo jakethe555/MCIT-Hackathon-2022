@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 require("dotenv").config();
-const path = require("path");
+// const path = require("path");
 const cors = require("cors");
 
 const app = express();
@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json()); // parses incoming requests with JSON payloads
 
 // declare react files in build as static
-app.use(express.static(path.join(__dirname, "build")));
+// app.use(express.static(path.join(__dirname, "build")));
 
 //create connection to database
 const db = mysql.createPool({
@@ -75,6 +75,6 @@ app.delete("/weights/:id", (req, res) => {
 });
 
 // serve index.html from the build folder
-app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+// app.get("/*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
