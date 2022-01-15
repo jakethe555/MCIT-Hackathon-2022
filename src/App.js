@@ -9,9 +9,11 @@ function App() {
     const [weights, setWeights] = useState([]);
     // 2.
     const getWeights = () => {
-        axios.get("http://localhost:3000/weight").then((res) => {
-            setWeights(res.data);
-        });
+        axios
+            .get("https://cool-pet-food-tracker.herokuapp.com//weight")
+            .then((res) => {
+                setWeights(res.data);
+            });
     };
     // 3.
     useEffect(() => {
