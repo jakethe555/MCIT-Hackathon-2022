@@ -36,7 +36,7 @@ function App() {
                     Learn React
                 </a>
             </header>
-            <div className="weights">
+            {/* <div className="weights">
                 {weights.map((item) => {
                     return (
                         <div className="weight">
@@ -45,7 +45,7 @@ function App() {
                         </div>
                     );
                 })}
-            </div>
+            </div> */}
         </div>
     );
 }
