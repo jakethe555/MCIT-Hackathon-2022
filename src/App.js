@@ -8,13 +8,14 @@ function App() {
     // 1.
     const [weights, setWeights] = useState([]);
     // 2.
-    setInterval(getWeights, 60000);
     const getWeights = () => {
-        axios
-            .get("https://cool-pet-food-tracker.herokuapp.com/weights")
-            .then((res) => {
-                setWeights(res.data);
-            });
+        setInterval(() => {
+            axios
+                .get("https://cool-pet-food-tracker.herokuapp.com/weights")
+                .then((res) => {
+                    setWeights(res.data);
+                });
+        }, 60000);
     };
     // 3.
     useEffect(() => {
