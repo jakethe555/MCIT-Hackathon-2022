@@ -31,10 +31,10 @@ export default class Current extends React.Component {
     enoughFood() {
         const currentWeight = this.state.currentWeight;
 
-        if (currentWeight > 200) {
+        if (currentWeight >= 200) {
             return "The food bowl is full! No need to worry"
         }
-        else if (currentWeight < 20) {
+        else if (currentWeight > 20 && currentWeight < 200) {
             return "The food bowl is almost empty. Consider refilling!"
         }
         return "The food bowl is empty! Refill as soon as possible!"
@@ -43,10 +43,10 @@ export default class Current extends React.Component {
     enoughFoodImage() {
         const currentWeight = this.state.currentWeight;
 
-        if (currentWeight > 200) {
+        if (currentWeight >= 200) {
             return require('./bowl1.png');
         }
-        else if (currentWeight > 10) {
+        else if (currentWeight > 20 && currentWeight < 200) {
             return require('./bowl2.png');
         }
         return require('./bowl3.png');
