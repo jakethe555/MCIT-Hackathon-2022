@@ -3,23 +3,23 @@ const mysql = require("mysql");
 require("dotenv").config();
 // const path = require("path");
 const cors = require("cors");
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
 
 // Configuration for sending emails using nodemailer
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'coolpetfoodtracker@gmail.com',
-    pass: 'j8asj91aml'
-  }
+    service: "gmail",
+    auth: {
+        user: "coolpetfoodtracker@gmail.com",
+        pass: "j8asj91aml",
+    },
 });
 
 // Set email content
 var mailOptions = {
-  from: 'coolpetfoodtracker@gmail.com',
-  to: 'christianrichmond.12@gmail.com',
-  subject: "Your pet's bowl is empty!",
-  html: '<h1>Your pet\'s bowl is empty!</h1> <img alt="Embedded Image" height="512" width="384" src="https://i.imgur.com/unzfnaD.jpeg" />',
+    from: "coolpetfoodtracker@gmail.com",
+    to: "christianrichmond.12@gmail.com",
+    subject: "Your pet's bowl is empty!",
+    html: '<h1>Your pet\'s bowl is empty!</h1> <img alt="Embedded Image" height="512" width="384" src="https://i.imgur.com/unzfnaD.jpeg" />',
 };
 
 
@@ -108,7 +108,8 @@ var lastEmailTime = 0;
 
 //function to get last weight
 function getweight() {
-    const newquery = "SELECT food_weight from (SELECT * FROM weights ORDER BY id DESC LIMIT 1)";
+    const newquery =
+        "SELECT food_weight from (SELECT * FROM weights ORDER BY id DESC LIMIT 1)";
     return db.query(newquery, lastweight);
 }
 
@@ -149,16 +150,19 @@ var intervalId = setInterval(function() {
 var intervalId2 = setInterval(function() {
     console.log("Interval2 reached every 5 minutes");
 
-    db.query(`
+    db.query(
+        `
     DELETE FROM eatenperday
-    `, function(err, value){
-        if(err) {
-            throw err;
-        } else {
-            console.log("------");
-            console.log("deleted eaten per day");
-            console.log("------");
-            db.query(`
+    `,
+        function (err, value) {
+            if (err) {
+                throw err;
+            } else {
+                console.log("------");
+                console.log("deleted eaten per day");
+                console.log("------");
+                db.query(
+                    `
             INSERT INTO eatenperday (day, eaten)
             SELECT day, SUM(diff_eaten) AS eaten
             FROM
@@ -177,7 +181,7 @@ var intervalId2 = setInterval(function() {
                     throw err;
                 } else {
                     console.log("------");
-                    console.log("updated eaten per day");
+                    console.log("updated eatenperday");
                     console.log("------");
                 }
         
