@@ -4,6 +4,8 @@ import axios from "axios";
 export default class Current extends React.Component {
     interval = null;
 
+
+
     state = {
         currentWeight: "",
     };
@@ -26,8 +28,45 @@ export default class Current extends React.Component {
         });
     };
 
+    enoughFood() {
+        const currentWeight = this.state.currentWeight;
+
+        if (currentWeight >= 200) {
+            return "The food bowl is full! No need to worry"
+        }
+        else if (currentWeight > 20 && currentWeight < 200) {
+            return "The food bowl is almost empty. Consider refilling!"
+        }
+        return "The food bowl is empty! Refill as soon as possible!"
+    }
+
+    enoughFoodImage() {
+        const currentWeight = this.state.currentWeight;
+
+        if (currentWeight >= 200) {
+            return require('./bowl1.png');
+        }
+        else if (currentWeight > 20 && currentWeight < 200) {
+            return require('./bowl2.png');
+        }
+        return require('./bowl3.png');
+
+    }
+
     render() {
         const currentWeight = this.state.currentWeight;
-        return <h4> {currentWeight} grams </h4>;
+
+        return(
+            <div>
+                <img style={{position: 'relative', top: '-90px'}} src={require('./logo.png')} alt="supposed to be cat" width={'300px'} height={'auto'}/>
+                <h2 style={{position: 'relative'}}>{this.enoughFood()}</h2>
+
+                <span>
+                    <img src={this.enoughFoodImage()} alt="cat food bowl" width={'350px'} height={'auto'}/>
+                </span>
+
+                <h4 style = {{position: 'relative'}}> Current Weight: {currentWeight} grams </h4>
+            </div>
+        )
     }
 }
