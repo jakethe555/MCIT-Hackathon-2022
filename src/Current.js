@@ -17,6 +17,7 @@ export default class Current extends React.Component {
         clearInterval(this.interval);
     }
 
+    // get the weight of the last item
     getData = () => {
         axios.get(`http://localhost:3000/weights`).then((res) => {
             const weights = res.data;
