@@ -22,12 +22,21 @@ export default class Current extends React.Component {
         axios.get(`http://localhost:3000/weights`).then((res) => {
             const weights = res.data;
             const currentWeight = weights[weights.length - 1].food_weight;
+            let time = weights[weights.length - 1].time;
+            this.setState({time});
             this.setState({ currentWeight });
         });
     };
 
     render() {
         const currentWeight = this.state.currentWeight;
-        return <h4> {currentWeight} grams </h4>;
+        const time = this.state.time;
+
+        return(
+            <div>
+                <h4>Time: {time}</h4>
+                <h4>Lastest Weight: {currentWeight} grams </h4>
+            </div>
+        )
     }
 }
