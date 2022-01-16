@@ -34,7 +34,7 @@ export default class Current extends React.Component {
         if (currentWeight > 200) {
             return "The food bowl is full! No need to worry"
         }
-        else if (currentWeight > 10) {
+        else if (currentWeight < 20) {
             return "The food bowl is almost empty. Consider refilling!"
         }
         return "The food bowl is empty! Refill as soon as possible!"
@@ -58,14 +58,14 @@ export default class Current extends React.Component {
 
         return(
             <div>
-                <img style={{position: 'relative', top: '-90px'}} src={require('/Users/radin/Desktop/MCIT_Hackthon/MCIT-Hackathon-2021/src/logo.png')} alt="supposed to be cat" width={'300px'} height={'auto'}/>
+                <img style={{position: 'relative', top: '-90px'}} src={require('./logo.png')} alt="supposed to be cat" width={'300px'} height={'auto'}/>
                 <h2 style={{position: 'relative'}}>{this.enoughFood()}</h2>
 
                 <span>
                     <img src={this.enoughFoodImage()} alt="cat food bowl" width={'350px'} height={'auto'}/>
                 </span>
 
-                <h4 style = {{position: 'relative'}}>{currentWeight} grams </h4>
+                <h4 style = {{position: 'relative'}}> Current Weight: {currentWeight} grams </h4>
             </div>
         )
     }
