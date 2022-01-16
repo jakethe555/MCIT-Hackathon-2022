@@ -5,6 +5,7 @@ require("dotenv").config();
 const cors = require("cors");
 var nodemailer = require('nodemailer');
 
+// Configuration for sending emails using nodemailer
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -13,12 +14,14 @@ var transporter = nodemailer.createTransport({
   }
 });
 
+// Set email content
 var mailOptions = {
   from: 'coolpetfoodtracker@gmail.com',
   to: 'christianrichmond.12@gmail.com',
   subject: "Your pet's bowl is empty!",
   html: '<h1>Your pet\'s bowl is empty!</h1> <img alt="Embedded Image" height="512" width="384" src="https://i.imgur.com/unzfnaD.jpeg" />',
 };
+
 
 const app = express();
 app.use(cors());
@@ -41,6 +44,16 @@ const listener = app.listen(process.env.PORT || 3000, () => {
 
 app.get("/weights", (req, res) => {
     db.query("SELECT * FROM weights", (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.get("/eatenperday", (req, res) => {
+    db.query("SELECT * FROM eatenperday", (err, result) => {
         if (err) {
             console.log(err);
         } else {
@@ -93,14 +106,15 @@ app.delete("/weights/:id", (req, res) => {
 var lastweight;
 var lastEmailTime = 0;
 
+//function to get last weight
 function getweight() {
     const newquery = "SELECT food_weight from (SELECT * FROM weights ORDER BY id DESC LIMIT 1)";
     return db.query(newquery, lastweight);
 }
 
-
+// Send an email if the last weight is under 15 grams
 var intervalId = setInterval(function() {
-    console.log("Interval1 reached every 120s");
+    console.log("Interval1 reached every 3 minutes");
     
 	if (Math.floor((new Date() - lastEmailTime)/1000/3600) > 8){
 	    db.query("SELECT * FROM weights ORDER BY id DESC LIMIT 1", function(err, value){
@@ -114,7 +128,7 @@ var intervalId = setInterval(function() {
 			console.log(lastweight);
 			console.log("------");
 			  
-			if (lastweight < 10) {
+			if (lastweight < 15) {
 				console.log("Weight below minimum");
 				transporter.sendMail(mailOptions, function(error, info){
 				if (error) {
@@ -129,10 +143,11 @@ var intervalId = setInterval(function() {
 		});
 	}
 	
-}, 120000);
+ }, 180000);
 
+// Update table "eatenperday" with food eaten per day. This table will be used for the dashboard
 var intervalId2 = setInterval(function() {
-    console.log("Interval2 reached every 120s");
+    console.log("Interval2 reached every 5 minutes");
 
     db.query(`
     DELETE FROM eatenperday
@@ -145,12 +160,18 @@ var intervalId2 = setInterval(function() {
             console.log("------");
             db.query(`
             INSERT INTO eatenperday (day, eaten)
-            SELECT day, (max - min) AS eaten
+            SELECT day, SUM(diff_eaten) AS eaten
             FROM
-            (SELECT day, MAX(food_weight) AS max, MIN(food_weight) AS min
+            (SELECT cast(time AS date) AS day, diff_eaten
             FROM
-            (SELECT cast(time AS date) AS day, food_weight FROM weights)temp1
-            GROUP BY day)temp2
+            (SELECT *, CASE
+                WHEN diff < 0 THEN -diff
+                WHEN diff >= 0 THEN 0
+            END AS diff_eaten
+            FROM
+            (SELECT time, food_weight, food_weight-LAG(food_weight,1,0) OVER(ORDER BY time ASC) AS diff
+            FROM weights)temp1)temp2)temp3
+            GROUP BY day
             `, function(err, value){
                 if(err) {
                     throw err;
@@ -163,7 +184,8 @@ var intervalId2 = setInterval(function() {
             });
         }
     });
-}, 120000);
+}, 300000);
+
 
 // serve index.html from the build folder
 // app.get("/*", (req, res) => {
