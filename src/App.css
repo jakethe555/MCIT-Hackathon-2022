@@ -34,6 +34,13 @@
     color: #61dafb;
 }
 
+.Logo {
+    object-fit: contain;
+    padding-top: 100px;
+    padding-bottom: 30px;
+    width: 40vw;
+}
+
 .Main {
     width: 60%;
     min-height: 100vh;
@@ -64,5 +71,12 @@
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .Main {
+        width: 80%;
+        font-size: calc(6px + 1vmin);
     }
 }

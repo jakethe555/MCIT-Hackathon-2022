@@ -10,13 +10,9 @@ function App() {
             <div className="App-header">
                 <div className="Main">
                     <img
+                        className="Logo"
                         src={require("./logo.png")}
                         alt="supposed to be cat"
-                        width={"300px"}
-                        height={"auto"}
-                        style={
-                            ({ paddingBottom: "100px" }, { paddingTop: "30px" })
-                        }
                     />
                     <Current />
                     <CurrentChart />
