@@ -11,7 +11,7 @@ export const options = {
     plugins: {
         title: {
             display: true,
-            text: "Today's Real-Time Food Weight",
+            text: "Average Food Eaten per Day",
             fontSize: 20,
         },
         legend: {
@@ -26,6 +26,7 @@ export const options = {
             time: {
                 // Luxon format string
                 tooltipFormat: "MM/DD/YYYY",
+                unit: "day",
             },
             title: {
                 display: true,
@@ -43,13 +44,11 @@ export default class AverageWeightChart extends React.Component {
         this.state = {
             date_times: [],
             food_weights: [],
-            date_times_bar: [],
-            food_weights_bar: [],
         };
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.getData, 5000);
+        this.interval = setInterval(this.getData, 3600000);
         this.getData();
     }
 
@@ -62,16 +61,13 @@ export default class AverageWeightChart extends React.Component {
         let time = [];
         let weight = [];
 
-        axios.get(`http://localhost:3000/weights`).then((res) => {
+        axios.get(`http://localhost:3000/eatenperday`).then((res) => {
             for (const dataObj of res.data) {
                 var localTime = moment().format("YYYY-MM-DD"); // store localTime
-                var dataTime = moment(dataObj.time).format("YYYY-MM-DD"); // store localTime
+                var dataTime = moment(dataObj.day).format("YYYY-MM-DD"); // store localTime
 
-                // only allow data from today
-                if (localTime === dataTime) {
-                    time.push(dataObj.time);
-                    weight.push(parseInt(dataObj.food_weight));
-                }
+                time.push(dataObj.day);
+                weight.push(parseInt(dataObj.eaten));
             }
 
             this.setState({ date_times: time });
@@ -83,7 +79,7 @@ export default class AverageWeightChart extends React.Component {
         return (
             <div className="ChartDisplay">
                 <Chart
-                    type="line"
+                    type="bar"
                     data={{
                         labels: this.state.date_times,
                         datasets: [

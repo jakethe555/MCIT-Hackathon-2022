@@ -43,13 +43,11 @@ export default class CurrentChart extends React.Component {
         this.state = {
             date_times: [],
             food_weights: [],
-            date_times_bar: [],
-            food_weights_bar: [],
         };
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.getData, 5000);
+        this.interval = setInterval(this.getData, 60000);
         this.getData();
     }
 
