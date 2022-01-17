@@ -3,6 +3,7 @@ const mysql = require("mysql");
 require("dotenv").config();
 const path = require("path");
 const cors = require("cors");
+
 var nodemailer = require("nodemailer");
 
 // Configuration for sending emails using nodemailer
