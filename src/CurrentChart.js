@@ -53,7 +53,7 @@ export default class CurrentChart extends React.Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.getData, 60000);
+        this.interval = setInterval(this.getData, 10000);
         this.getData();
     }
 

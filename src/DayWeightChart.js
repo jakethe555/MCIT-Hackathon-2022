@@ -54,7 +54,7 @@ export default class DayWeightChart extends React.Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.getData, 3600000);
+        this.interval = setInterval(this.getData, 10000);
         this.getData();
     }
 
