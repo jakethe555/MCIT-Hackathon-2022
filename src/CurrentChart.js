@@ -103,6 +103,8 @@ export default class CurrentChart extends React.Component {
                         ],
                     }}
                     options={options}
+                    height="42vw"
+                    width="40vw"
                 />
             </div>
         );

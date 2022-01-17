@@ -101,6 +101,8 @@ export default class DayWeightChart extends React.Component {
                         ],
                     }}
                     options={options}
+                    height="42vw"
+                    width="40vw"
                 />
             </div>
         );
