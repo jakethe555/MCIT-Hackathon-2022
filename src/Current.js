@@ -1,3 +1,4 @@
+import "./Current.css";
 import React from "react";
 import axios from "axios";
 
@@ -57,10 +58,9 @@ export default class Current extends React.Component {
 
                 <span>
                     <img
+                        className="BowlImg"
                         src={this.enoughFoodImage()}
                         alt="cat food bowl"
-                        width={"350px"}
-                        height={"auto"}
                     />
                 </span>
 
