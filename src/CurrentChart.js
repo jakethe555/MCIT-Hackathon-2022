@@ -53,7 +53,7 @@ export default class CurrentChart extends React.Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.getData, 60000);
+        this.interval = setInterval(this.getData, 10000);
         this.getData();
     }
 
@@ -66,21 +66,23 @@ export default class CurrentChart extends React.Component {
         let time = [];
         let weight = [];
 
-        axios.get(`http://localhost:3000/weights`).then((res) => {
-            for (const dataObj of res.data) {
-                var localTime = moment().format("YYYY-MM-DD"); // store localTime
-                var dataTime = moment(dataObj.time).format("YYYY-MM-DD"); // store localTime
+        axios
+            .get(`https://cool-pet-food-tracker.herokuapp.com/weights`)
+            .then((res) => {
+                for (const dataObj of res.data) {
+                    var localTime = moment().format("YYYY-MM-DD"); // store localTime
+                    var dataTime = moment(dataObj.time).format("YYYY-MM-DD"); // store localTime
 
-                // only allow data from today
-                if (localTime === dataTime) {
-                    time.push(dataObj.time);
-                    weight.push(parseInt(dataObj.food_weight));
+                    // only allow data from today
+                    if (localTime === dataTime) {
+                        time.push(dataObj.time);
+                        weight.push(parseInt(dataObj.food_weight));
+                    }
                 }
-            }
 
-            this.setState({ date_times: time });
-            this.setState({ food_weights: weight });
-        });
+                this.setState({ date_times: time });
+                this.setState({ food_weights: weight });
+            });
     };
 
     render() {
@@ -101,6 +103,8 @@ export default class CurrentChart extends React.Component {
                         ],
                     }}
                     options={options}
+                    height="42vw"
+                    width="40vw"
                 />
             </div>
         );
