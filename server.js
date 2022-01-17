@@ -42,6 +42,7 @@ const listener = app.listen(process.env.PORT || 3000, () => {
     console.log("App is listening on port " + listener.address().port);
 });
 
+// Operation to get data from table weights
 app.get("/weights", (req, res) => {
     db.query("SELECT * FROM weights", (err, result) => {
         if (err) {
@@ -52,6 +53,7 @@ app.get("/weights", (req, res) => {
     });
 });
 
+// Operation to get data from table eatenperday
 app.get("/eatenperday", (req, res) => {
     db.query("SELECT * FROM eatenperday", (err, result) => {
         if (err) {
@@ -62,6 +64,7 @@ app.get("/eatenperday", (req, res) => {
     });
 });
 
+// Operation to add data to table weights
 app.post("/weights", (req, res) => {
     const insertQuery = "INSERT INTO weights SET ?";
     db.query(insertQuery, req.body, (err, result) => {
@@ -73,6 +76,7 @@ app.post("/weights", (req, res) => {
     });
 });
 
+// Operation to modify data in table weights
 app.put("/weights", (req, res) => {
     const updateQuery =
         "UPDATE weights SET time = ?, food_weight = ? WHERE id = ?";
@@ -89,6 +93,7 @@ app.put("/weights", (req, res) => {
     );
 });
 
+// Operation to delete data in table weights
 app.delete("/weights/:id", (req, res) => {
     db.query(
         "DELETE FROM weights WHERE id = ?",
@@ -113,7 +118,9 @@ function getweight() {
     return db.query(newquery, lastweight);
 }
 
-// Send an email if the last weight is under 15 grams
+// Checks every 3 minutes if the last weight measurement is under 20 grams
+// and sends an email if the condition is met
+// An email is sent only if it has been at least 9 hours from the last email
 var intervalId = setInterval(function() {
     console.log("Interval1 reached every 3 minutes");
     
@@ -125,11 +132,9 @@ var intervalId = setInterval(function() {
 				lastweight = value[0].food_weight;
 			}
 		  
-			console.log("------");
 			console.log(lastweight);
-			console.log("------");
 			  
-			if (lastweight < 15) {
+			if (lastweight < 20) {
 				console.log("Weight below minimum");
 				transporter.sendMail(mailOptions, function(error, info){
 				if (error) {
@@ -146,7 +151,8 @@ var intervalId = setInterval(function() {
 	
  }, 180000);
 
-// Update table "eatenperday" with food eaten per day. This table will be used for the dashboard
+// Updates table "eatenperday" with the total food eaten per day. This table will be used for the dashboard.
+// Updates every 5 minutes.
 var intervalId2 = setInterval(function() {
     console.log("Interval2 reached every 5 minutes");
 
@@ -162,27 +168,25 @@ var intervalId2 = setInterval(function() {
                 console.log("deleted eaten per day");
                 console.log("------");
                 db.query(
-                    `
-            INSERT INTO eatenperday (day, eaten)
-            SELECT day, SUM(diff_eaten) AS eaten
-            FROM
-            (SELECT cast(time AS date) AS day, diff_eaten
-            FROM
-            (SELECT *, CASE
-                WHEN diff < 0 THEN -diff
-                WHEN diff >= 0 THEN 0
-            END AS diff_eaten
-            FROM
-            (SELECT time, food_weight, food_weight-LAG(food_weight,1,0) OVER(ORDER BY time ASC) AS diff
-            FROM weights)temp1)temp2)temp3
-            GROUP BY day
-            `, function(err, value){
+                `
+                INSERT INTO eatenperday (day, eaten)
+                SELECT day, SUM(diff_eaten) AS eaten
+                FROM
+                (SELECT cast(time AS date) AS day, diff_eaten
+                FROM
+                (SELECT *, CASE
+                    WHEN diff < 0 THEN -diff
+                    WHEN diff >= 0 THEN 0
+                END AS diff_eaten
+                FROM
+                (SELECT time, food_weight, food_weight-LAG(food_weight,1,0) OVER(ORDER BY time ASC) AS diff
+                FROM weights)temp1)temp2)temp3
+                GROUP BY day
+                `, function(err, value){
                 if(err) {
                     throw err;
                 } else {
-                    console.log("------");
                     console.log("updated eatenperday");
-                    console.log("------");
                 }
         
             });
