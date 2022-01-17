@@ -11,7 +11,7 @@ export const options = {
     plugins: {
         title: {
             display: true,
-            text: "Average Food Eaten per Day",
+            text: "Food Eaten per Day",
             fontSize: 20,
         },
         legend: {
@@ -31,6 +31,12 @@ export const options = {
             title: {
                 display: true,
                 text: "Time",
+            },
+        },
+        y: {
+            title: {
+                display: true,
+                text: "Weight (grams)",
             },
         },
     },
@@ -85,8 +91,8 @@ export default class DayWeightChart extends React.Component {
                         datasets: [
                             {
                                 label: "Weight",
-                                backgroundColor: "rgba(75,192,192,1)",
-                                borderColor: "rgba(75,192,192,1)",
+                                backgroundColor: "#72abdb",
+                                borderColor: "#72abdb",
                                 borderWidth: 2,
                                 data: this.state.food_weights,
                             },

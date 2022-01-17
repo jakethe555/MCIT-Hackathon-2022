@@ -32,6 +32,12 @@ export const options = {
                 text: "Time",
             },
         },
+        y: {
+            title: {
+                display: true,
+                text: "Weight (grams)",
+            },
+        },
     },
 };
 
@@ -87,8 +93,8 @@ export default class CurrentChart extends React.Component {
                         datasets: [
                             {
                                 label: "Weight",
-                                backgroundColor: "rgba(75,192,192,1)",
-                                borderColor: "rgba(75,192,192,1)",
+                                backgroundColor: "#72abdb",
+                                borderColor: "#72abdb",
                                 borderWidth: 2,
                                 data: this.state.food_weights,
                             },

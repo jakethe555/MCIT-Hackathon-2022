@@ -21,15 +21,15 @@ function App() {
                     <Current />
                     <CurrentChart />
                     <DayWeightChart />
-                    <div className="Footer">
-                        <h4>
-                            Team: 2B||!2B <br />
-                            <span className="Names">
-                                Christian Richmond, Jae Young Lee, Radin
-                                Nojoomi, Shuke Zeng
-                            </span>
-                        </h4>
-                    </div>
+                </div>
+                <div className="Footer">
+                    <h4>
+                        Team: 2B||!2B <br />
+                        <span className="Names">
+                            Christian Richmond, Jae Young Lee, Radin Nojoomi,
+                            Shuke Zeng
+                        </span>
+                    </h4>
                 </div>
             </div>
         </div>
