@@ -172,7 +172,9 @@ var intervalId2 = setInterval(function () {
                 db.query(
                     `
                 INSERT INTO eatenperday (day, eaten)
-                SELECT day, SUM(diff_eaten) AS eaten
+                SELECT * FROM
+                (SELECT * FROM
+                (SELECT day, SUM(diff_eaten) AS eaten
                 FROM
                 (SELECT cast(time AS date) AS day, diff_eaten
                 FROM
@@ -188,7 +190,9 @@ var intervalId2 = setInterval(function () {
                 (SELECT id+1 AS id2, food_weight AS previous
                 FROM weights)temp1
                 ON id = id2)temp2)temp3)temp4)temp5
-                GROUP BY day
+                GROUP BY day)temp6
+                ORDER BY day DESC LIMIT 7)temp7
+                ORDER BY day ASC
                 `,
                     function (err, value) {
                         if (err) {
