@@ -1,6 +1,6 @@
 # MCIT Hackathon 2022
 
-## Team Members
+## Team Members (2B||!2B)
 Christian Richmond,
 Jae Young (Jake) Lee,
 Rain Nojoomi,
