@@ -20,11 +20,13 @@ export default class Current extends React.Component {
 
     // get the weight of the last item
     getData = () => {
-        axios.get(`http://localhost:3000/weights`).then((res) => {
-            const weights = res.data;
-            const currentWeight = weights[weights.length - 1].food_weight;
-            this.setState({ currentWeight });
-        });
+        axios
+            .get(`https://cool-pet-food-tracker.herokuapp.com/weights`)
+            .then((res) => {
+                const weights = res.data;
+                const currentWeight = weights[weights.length - 1].food_weight;
+                this.setState({ currentWeight });
+            });
     };
 
     enoughFood() {

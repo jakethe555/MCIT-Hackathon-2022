@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 require("dotenv").config();
-// const path = require("path");
+const path = require("path");
 const cors = require("cors");
 var nodemailer = require("nodemailer");
 
@@ -22,13 +22,12 @@ var mailOptions = {
     html: '<h1>Your pet\'s bowl is empty!</h1> <img alt="Embedded Image" height="512" width="384" src="https://i.imgur.com/unzfnaD.jpeg" />',
 };
 
-
 const app = express();
 app.use(cors());
 app.use(express.json()); // parses incoming requests with JSON payloads
 
 // declare react files in build as static
-// app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "build")));
 
 //create connection to database
 const db = mysql.createPool({
@@ -121,39 +120,41 @@ function getweight() {
 // Checks every 3 minutes if the last weight measurement is under 20 grams
 // and sends an email if the condition is met
 // An email is sent only if it has been at least 9 hours from the last email
-var intervalId = setInterval(function() {
+var intervalId = setInterval(function () {
     console.log("Interval1 reached every 3 minutes");
-    
-	if (Math.floor((new Date() - lastEmailTime)/1000/3600) > 8){
-	    db.query("SELECT * FROM weights ORDER BY id DESC LIMIT 1", function(err, value){
-			if(err) {
-				throw err;
-			} else {
-				lastweight = value[0].food_weight;
-			}
-		  
-			console.log(lastweight);
-			  
-			if (lastweight < 20) {
-				console.log("Weight below minimum");
-				transporter.sendMail(mailOptions, function(error, info){
-				if (error) {
-					console.log(error);
-				} else {
-					console.log('Email sent: ' + info.response);
-					lastEmailTime = new Date();
-					console.log(lastEmailTime);
-				}
-				});
-			}
-		});
-	}
-	
- }, 180000);
+
+    if (Math.floor((new Date() - lastEmailTime) / 1000 / 3600) > 8) {
+        db.query(
+            "SELECT * FROM weights ORDER BY id DESC LIMIT 1",
+            function (err, value) {
+                if (err) {
+                    throw err;
+                } else {
+                    lastweight = value[0].food_weight;
+                }
+
+                console.log(lastweight);
+
+                if (lastweight < 20) {
+                    console.log("Weight below minimum");
+                    transporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("Email sent: " + info.response);
+                            lastEmailTime = new Date();
+                            console.log(lastEmailTime);
+                        }
+                    });
+                }
+            }
+        );
+    }
+}, 180000);
 
 // Updates table "eatenperday" with the total food eaten per day. This table will be used for the dashboard.
 // Updates every 5 minutes.
-var intervalId2 = setInterval(function() {
+var intervalId2 = setInterval(function () {
     console.log("Interval2 reached every 5 minutes");
 
     db.query(
@@ -168,7 +169,7 @@ var intervalId2 = setInterval(function() {
                 console.log("deleted eaten per day");
                 console.log("------");
                 db.query(
-                `
+                    `
                 INSERT INTO eatenperday (day, eaten)
                 SELECT day, SUM(diff_eaten) AS eaten
                 FROM
@@ -182,20 +183,21 @@ var intervalId2 = setInterval(function() {
                 (SELECT time, food_weight, food_weight-LAG(food_weight,1,0) OVER(ORDER BY time ASC) AS diff
                 FROM weights)temp1)temp2)temp3
                 GROUP BY day
-                `, function(err, value){
-                if(err) {
-                    throw err;
-                } else {
-                    console.log("updated eatenperday");
-                }
-        
-            });
+                `,
+                    function (err, value) {
+                        if (err) {
+                            throw err;
+                        } else {
+                            console.log("updated eatenperday");
+                        }
+                    }
+                );
+            }
         }
-    });
+    );
 }, 300000);
 
-
 // serve index.html from the build folder
-// app.get("/*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "build", "index.html"));
-// });
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+});

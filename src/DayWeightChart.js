@@ -67,18 +67,20 @@ export default class DayWeightChart extends React.Component {
         let time = [];
         let weight = [];
 
-        axios.get(`http://localhost:3000/eatenperday`).then((res) => {
-            for (const dataObj of res.data) {
-                var localTime = moment().format("YYYY-MM-DD"); // store localTime
-                var dataTime = moment(dataObj.day).format("YYYY-MM-DD"); // store localTime
+        axios
+            .get(`https://cool-pet-food-tracker.herokuapp.com/eatenperday`)
+            .then((res) => {
+                for (const dataObj of res.data) {
+                    var localTime = moment().format("YYYY-MM-DD"); // store localTime
+                    var dataTime = moment(dataObj.day).format("YYYY-MM-DD"); // store localTime
 
-                time.push(dataObj.day);
-                weight.push(parseInt(dataObj.eaten));
-            }
+                    time.push(dataObj.day);
+                    weight.push(parseInt(dataObj.eaten));
+                }
 
-            this.setState({ date_times: time });
-            this.setState({ food_weights: weight });
-        });
+                this.setState({ date_times: time });
+                this.setState({ food_weights: weight });
+            });
     };
 
     render() {
