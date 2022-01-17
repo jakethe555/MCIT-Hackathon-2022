@@ -1,10 +1,10 @@
 # MCIT Hackathon 2022
 
 ## Team Members
-Christian Richmond
-Jae Young (Jake) Lee
-Rain Nojoomi
-Shuke Zeng
+Christian Richmond,
+Jae Young (Jake) Lee,
+Rain Nojoomi,
+Shuke Zeng,
 Schrodinger Zeng (2 yr old, tester)
 
 ## Project Name
