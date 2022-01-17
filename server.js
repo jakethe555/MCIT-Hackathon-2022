@@ -179,20 +179,28 @@ var intervalId2 = setInterval(function() {
                     WHEN diff >= 0 THEN 0
                 END AS diff_eaten
                 FROM
-                (SELECT time, food_weight, food_weight-LAG(food_weight,1,0) OVER(ORDER BY time ASC) AS diff
-                FROM weights)temp1)temp2)temp3
+                (SELECT time, food_weight, food_weight - previous AS diff
+                FROM   
+                (SELECT id, time, food_weight, previous FROM
+                weights INNER JOIN
+                (SELECT id+1 AS id2, food_weight AS previous
+                FROM weights)temp1
+                ON id = id2)temp2)temp3)temp4)temp5
                 GROUP BY day
                 `, function(err, value){
                 if(err) {
                     throw err;
                 } else {
                     console.log("updated eatenperday");
+                    console.log(value);
                 }
         
             });
         }
     });
 }, 300000);
+
+
 
 
 // serve index.html from the build folder
