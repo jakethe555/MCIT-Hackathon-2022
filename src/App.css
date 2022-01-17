@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Trochut&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Trochut&display=swap");
 
 .App {
     text-align: center;
@@ -28,7 +27,7 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: black;
-    font-family: 'Trochut', cursive;
+    font-family: "Trochut", cursive;
 }
 
 .App-link {
@@ -45,6 +44,18 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: black;
+}
+
+.Names {
+    font-size: calc(3px + 1vmin);
+}
+
+.Footer {
+    background-color: #cde8ff;
+    color: white;
+    font-family: "Arial";
+    font-size: calc(10px + 1vmin);
+    width: 100%;
 }
 
 @keyframes App-logo-spin {

@@ -1,8 +1,5 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import Current from "./Current.js";
 import CurrentChart from "./CurrentChart.js";
 import AverageWeightChart from "./AverageWeightChart.js";
@@ -17,11 +14,22 @@ function App() {
                         alt="supposed to be cat"
                         width={"300px"}
                         height={"auto"}
-                        style={{ paddingBottom: "100px" }}
+                        style={
+                            ({ paddingBottom: "100px" }, { paddingTop: "30px" })
+                        }
                     />
                     <Current />
                     <CurrentChart />
                     <AverageWeightChart />
+                    <div className="Footer">
+                        <h4>
+                            Team: 2B||!2B <br />
+                            <span className="Names">
+                                Christian Richmond, Jae Young Lee, Radin
+                                Nojoomi, Shuke Zeng
+                            </span>
+                        </h4>
+                    </div>
                 </div>
             </div>
         </div>

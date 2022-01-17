@@ -9,7 +9,7 @@ export default class Current extends React.Component {
     };
 
     componentDidMount() {
-        this.interval = setInterval(this.getData, 5000);
+        this.interval = setInterval(this.getData, 10000);
         this.getData();
     }
 
