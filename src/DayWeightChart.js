@@ -36,7 +36,7 @@ export const options = {
     },
 };
 
-export default class AverageWeightChart extends React.Component {
+export default class DayWeightChart extends React.Component {
     interval = null;
 
     constructor(props) {

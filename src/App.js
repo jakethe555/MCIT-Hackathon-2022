@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import Current from "./Current.js";
 import CurrentChart from "./CurrentChart.js";
-import AverageWeightChart from "./AverageWeightChart.js";
+import DayWeightChart from "./DayWeightChart.js";
 
 function App() {
     return (
@@ -20,7 +20,7 @@ function App() {
                     />
                     <Current />
                     <CurrentChart />
-                    <AverageWeightChart />
+                    <DayWeightChart />
                     <div className="Footer">
                         <h4>
                             Team: 2B||!2B <br />
