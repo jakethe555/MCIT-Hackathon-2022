@@ -160,8 +160,8 @@ var intervalId2 = setInterval(function () {
 
     db.query(
         `
-    DELETE FROM eatenperday
-    `,
+        TRUNCATE TABLE eatenperday;
+        `,
         function (err, value) {
             if (err) {
                 throw err;
