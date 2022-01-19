@@ -70,11 +70,12 @@ export default class CurrentChart extends React.Component {
             .get(`https://cool-pet-food-tracker.herokuapp.com/weights`)
             .then((res) => {
                 for (const dataObj of res.data) {
-                    var localTime = moment().format("YYYY-MM-DD"); // store localTime
+                    // var localTime = moment().format("YYYY-MM-DD"); // store localTime
                     var dataTime = moment(dataObj.time).format("YYYY-MM-DD"); // store localTime
 
                     // only allow data from today
-                    if (localTime === dataTime) {
+                    if ("2022-01-17" === dataTime) {
+                        // changed to display dummy data
                         time.push(dataObj.time);
                         weight.push(parseInt(dataObj.food_weight));
                     }
