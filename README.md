@@ -1,20 +1,20 @@
-# After you git clone the files
-"npm install" to download and install required modules.
+# MCIT Hackathon 2022
 
-## How deployment works
-The deployment of our web to Heroku happens when we push files to "main" branch in github. Then, Heroku builds website to deploy.
+## Team Members (2B||!2B)
+Christian Richmond,
+Jae Young (Jake) Lee,
+Rain Nojoomi,
+Shuke Zeng,
+Schrodinger Zeng (2 yr old, tester)
 
-## To develop locally
-I made a seperate branch called "local". I modified files to run server and website locally. 
-Checkout to the branch "local".
-Then, "nodemon server.js" to run server on localhost:3000.
-Then, "npm start" to see the webpage.
+## Project Name
+Cool Pet Food Tracker
 
-To set up local mySQL, look at (https://lo-victoria.com/build-mysql-nodejs-crud-app-1-setting-up).
-If you have any question about setting up local mySQL, please contact Jae Young Lee.
+## Project Description
+The Web App monitors food intake of a pet and notify the owner when the food amount is low. It also displays a dashboard for current food weight and consumption per day.
 
-### deploy-backup branch
-It is a backup of the app that we can deploy on Heroku
+## Tech Stack
+Node.js, React, CSS, MySQL, Arduino/Arduino IDE, Python, Heroku, ClearDB
 
-### Errors with modules
-We might encounter errors related to modules when we develop. One way to quick fix is to delete your "node_modules" folder and "package-lock.json" and run "npm install".
+## URL to the Project
+https://cool-pet-food-tracker.herokuapp.com/
